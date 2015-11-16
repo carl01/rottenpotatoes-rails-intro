@@ -21,13 +21,15 @@ class MoviesController < ApplicationController
       session[:first?]=false
     end
     if rating_filter==nil || rating_filter.length == 0
-      rating_filter = session[:rating_filter]
-    else
+      # rating_filter = session[:rating_filter]
+      logger.debug(">>>CI<<< session rating filter " + session[:rating_filter].to_s)
+      flash.keep
+      redirect_to movies_path(:ratings => session[:rating_filter], :key => key)
+    else #**
       session[:rating_filter] = rating_filter
-    end
+    #end
     logger.debug(">>>CI<<< rating_filter is " + rating_filter.to_s)
     if key == "title"
-      # @movies = Movie.order(title: :asc)
       @movies = Movie.where(rating: rating_filter.keys).order(title: :asc)
       @title_header_class='hilite'
       @release_date_header_class=''
@@ -38,6 +40,7 @@ class MoviesController < ApplicationController
     else    
       @movies = Movie.where(rating: rating_filter.keys).all
     end
+    end #**
   end
 
   def new
