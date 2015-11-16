@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
         # Prepare for next invocation of index method
         session[:first?] = false
       else
-        logger.debug(">>>CI<<< " + "Call after first.") 
+        # logger.debug(">>>CI<<< " + "Call after first.") 
       end
       # logger.debug(">>>CI<<< " + rating_filter.to_s)
       key = params[:key]
